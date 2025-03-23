@@ -23,7 +23,7 @@ def handle_image(data):
         frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
         # 影像處理（轉成灰階）
-        _, buffer = cv2.imencode(".jpg", gray)  # 轉換為 JPG 格式
+        _, buffer = cv2.imencode(".jpg", frame)  # 轉換為 JPG 格式
         processed_base64 = base64.b64encode(buffer).decode("utf-8")
 
         # 傳回處理後的影像
