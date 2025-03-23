@@ -5,7 +5,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")  # 允許跨域
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet", transports=["websocket"])
 
 @app.route("/")
 def home():
