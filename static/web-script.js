@@ -1,4 +1,4 @@
-const socket = io.connect("https://air-guitar.onrender.com", { transports: ["websocket"] });
+const socket = io.connect("wss://air-guitar.onrender.com", { transports: ["websocket"] });
 
 navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
