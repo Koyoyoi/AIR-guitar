@@ -17,7 +17,7 @@ navigator.mediaDevices.getUserMedia({ video: true })
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
                 const imageData = canvas.toDataURL("image/jpeg");
                 socket.emit("image", imageData);
-            }, 50);
+            }, 100);
         });
     })
     .catch(error => console.error("無法存取攝影機:", error));
