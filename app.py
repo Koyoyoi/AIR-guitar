@@ -34,4 +34,4 @@ def handle_image(data):
         print("Error:", e)
 
 if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0", port=port)
+    socketio.run(app, host="0.0.0.0", port=10000)
