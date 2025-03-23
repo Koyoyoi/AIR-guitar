@@ -33,4 +33,4 @@ def handle_image(data):
         print("Error:", e)
 
 if __name__ == "__main__":
-    socketio.run(app, host="https://air-guitar.onrender.com", port=10000)
+    socketio.run(app, host="0.0.0.0", port=10000)
