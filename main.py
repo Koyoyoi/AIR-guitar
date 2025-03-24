@@ -72,8 +72,8 @@ async def websocket_endpoint(websocket: WebSocket):
 
             _, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 50]
             flipped_base64 = base64.b64encode(buffer).decode('utf-8')
-            
             await websocket.send_text(f"data:image/jpeg;base64,{flipped_base64}")
+            
         except Exception as e:
             print("WebSocket Error:", e)
             break
