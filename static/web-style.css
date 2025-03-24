@@ -1,15 +1,17 @@
-body {
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+.h1{
+    font-size: 80px;
+    color: #434343;
 }
 
-img {
-    max-width: 90%;
-    max-height: 90vh;
-    border: 5px solid white;
-    border-radius: 10px;
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #1c1c1c;
+}
+
+canvas, img {
+    width: 75%;
+    margin-top: 5px;
+    border: 10px solid #434343;
+    border-radius: 20px; 
 }
