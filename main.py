@@ -55,6 +55,7 @@ async def websocket_endpoint(websocket: WebSocket):
             img_data = base64.b64decode(data.split(',')[1])
             np_arr = np.frombuffer(img_data, np.uint8)
             frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            cv2.resize(frame, (240, 180))
             frame = cv2.flip(frame, 1)
             window = { "h": frame.shape[0], "w": frame.shape[1]}
             handData = findHands.Marks(frame, window["h"], window["w"], depth=1)
