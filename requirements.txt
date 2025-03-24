@@ -1,6 +1,8 @@
-eventlet==0.39.1
-Flask==3.1.0
-Flask-SocketIO==5.5.1
-numpy==1.26.4
-opencv-python==4.11.0.86
-python-socketio==5.12.1
+fastapi
+uvicorn
+aiortc
+jinja2
+opencv-python
+websockets
+joblib
+mediapipe==0.10.11
