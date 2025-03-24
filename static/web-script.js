@@ -1,7 +1,7 @@
 const canvas = document.createElement("canvas"); // 動態建立 canvas
 const ctx = canvas.getContext("2d");
 const flippedImage = document.getElementById("flippedImage");
-const ws = new WebSocket("ws://air-guitar.onrender.com/ws");
+const ws = new WebSocket("wss://air-guitar.onrender.com/ws");
 
 // 啟動攝影機
 navigator.mediaDevices.getUserMedia({ video: true })
