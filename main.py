@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-import cv2, numpy as np, base64
+import cv2, numpy as np, base64, ffmpeg
 import os, cv2, joblib, time
 import handCompute as hc, MPClass as mp
 
@@ -22,8 +22,7 @@ labels = [label.strip() for label in readData]
 models = [name for name in os.listdir("models") if os.path.isdir(os.path.join("models", name))]
 modelIndex = models.index(dirName)
 
-findHands = mp.Hands(2, 0.5, 0.5)
-findAction = mp.Pose(0.5, 0.5)
+findHands = mp.Hands(2, 0.3, 0.3)
 
 capo = 0
 
@@ -48,15 +47,24 @@ async def home(request: Request):
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     prevGesture = None
+    frame_count = 0
     while True:
+        frame_count += 1
+        if frame_count % 5 == 0:  # 每 5 幀執行一次
+            if handData["left"] != []:
+                parameter = hc.compute(handData["left"])
+                parameter = scaler.transform([parameter])
+                predict = model.predict(parameter)
+                gesture = labels[predict[0]]
         try:
             data = await websocket.receive_text()
 
             img_data = base64.b64decode(data.split(',')[1])
             np_arr = np.frombuffer(img_data, np.uint8)
             frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-            cv2.resize(frame, (240, 180))
+            frame = cv2.resize(frame, (160, 120))
             frame = cv2.flip(frame, 1)
+            
             window = { "h": frame.shape[0], "w": frame.shape[1]}
             handData = findHands.Marks(frame, window["h"], window["w"], depth=1)
             
@@ -68,12 +76,12 @@ async def websocket_endpoint(websocket: WebSocket):
                 gesture = labels[predict[0]]   
                 if prevGesture != gesture:
                     prevGesture = gesture
-                cv2.putText(frame, f"{gesture}", (30, 60), txtFont, 2, colorTab["Red"], 2, txtStroke) 
+                print(gesture)
 
-            _, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 50])
+            _, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 90])
             flipped_base64 = base64.b64encode(buffer).decode('utf-8')
             await websocket.send_text(f"data:image/jpeg;base64,{flipped_base64}")
-            
+        
         except Exception as e:
             print("WebSocket Error:", e)
             break
