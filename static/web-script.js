@@ -1,28 +1,28 @@
-const socket = io.connect("wss://air-guitar.onrender.com", { transports: ["websocket"] });
+const canvas = document.createElement("canvas"); // 動態建立 canvas
+const ctx = canvas.getContext("2d");
+const flippedImage = document.getElementById("flippedImage");
+const ws = new WebSocket("ws://localhost:8000/ws");
 
+// 啟動攝影機
 navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
-        const video = document.createElement("video");
+        const video = document.createElement("video"); // 不顯示 video
         video.srcObject = stream;
         video.play();
 
-        video.addEventListener("loadedmetadata", () => {
-            // 設定 canvas 固定大小
-            const canvas = document.createElement("canvas");
-            canvas.width = 1080;
-            canvas.height = 720;
-            const ctx = canvas.getContext("2d");
-
+        video.addEventListener("play", () => {
             setInterval(() => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = canvas.toDataURL("image/jpeg");
-                socket.emit("image", imageData);
+                const dataURL = canvas.toDataURL("image/jpeg");
+                ws.send(dataURL);
             }, 100);
         });
     })
-    .catch(error => console.error("無法存取攝影機:", error));
+    .catch(err => console.error("攝影機錯誤:", err));
 
-// 接收處理後的影像並顯示
-socket.on("processed_image", function(data) {
-    document.getElementById("output").src = data;
-});
+// 接收並顯示翻轉影像
+ws.onmessage = event => {
+    flippedImage.src = event.data;
+};
