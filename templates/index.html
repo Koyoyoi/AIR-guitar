@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>影像處理</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='web-style.css') }}">
-    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <title>AIR Guitar</title>
+    <link rel="stylesheet" href="/static/web-style.css">
 </head>
 <body>
-    <img id="output" alt="處理後的影像">
-    <script src="{{ url_for('static', filename='web-script.js') }}"></script>
+    <h1 class="h1">AIR Guitar</h1>
+    <img id="flippedImage" />
+    <canvas id="canvas" style="display: none;"></canvas> <!-- 隱藏 canvas -->
+    <script src="/static/web-script.js"></script>
 </body>
 </html>
