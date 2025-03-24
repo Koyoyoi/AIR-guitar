@@ -10,7 +10,7 @@ body {
 }
 
 canvas, img {
-    width: 75%;
+    width: 50%;
     margin-top: 5px;
     border: 10px solid #434343;
     border-radius: 20px; 
