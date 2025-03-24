@@ -6,3 +6,4 @@ opencv-python
 websockets
 joblib
 mediapipe==0.10.11
+scikit-learn
