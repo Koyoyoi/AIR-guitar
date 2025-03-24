@@ -70,7 +70,7 @@ async def websocket_endpoint(websocket: WebSocket):
                     prevGesture = gesture
                 cv2.putText(frame, f"{gesture}", (30, 60), txtFont, 2, colorTab["Red"], 2, txtStroke) 
 
-            _, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 50]
+            _, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 50])
             flipped_base64 = base64.b64encode(buffer).decode('utf-8')
             await websocket.send_text(f"data:image/jpeg;base64,{flipped_base64}")
             
