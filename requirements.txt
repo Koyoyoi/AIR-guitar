@@ -7,4 +7,4 @@ opencv-python
 websockets
 joblib
 numpy
-sciket-learn
+scikit-learn
