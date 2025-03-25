@@ -5,7 +5,7 @@ import { compute, fingerPlay } from "/static/handCompute.js";
 let video, canvas, ctx, handLandmarker, drawingUtils;
 let handData = { "Left": [], "Right": [] };
 
-const ws = new WebSocket("ws://127.0.0.1:8000/ws");
+const ws = new WebSocket("wss://air-guitar.onrender.com/ws");
 
 // 設置攝影機並取得影像流
 async function setupCamera() {
